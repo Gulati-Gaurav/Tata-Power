@@ -11,14 +11,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script type="text/javascript">
-        function loadMap()
-        {
-            
-
+        function loadMap() {
             var gridView = document.getElementById('GridView1');
             var locations = [];
-            for (var i = 1; i < gridView.rows.length; i++)
-            {
+            for (var i = 1; i < gridView.rows.length; i++) {
                 var row = gridView.rows[i];
 
                 var val = row.cells[0].innerHTML;
@@ -35,14 +31,24 @@
             var first_loc_long = locations[0][1];
             var map = L.map('map').setView([first_loc_lat, first_loc_long], 15);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                    maxZoom: 18
-                }).addTo(map);
-            L.polyline(locations, { color: 'red' }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                maxZoom: 18
+            }).addTo(map);
+
+            function random_col() {
+                return '#' + Math.floor(Math.random() * 16777215).toString(16);
+            }
+
+            for (var i = 0; i < locations.length - 1; i++) {
+                var color = random_col();
+                L.polyline([locations[i], locations[i + 1]], { color: color }).addTo(map);
+                L.marker(locations[i]).addTo(map);
+            }
+            L.marker(locations[locations.length - 1]).addTo(map);
         };
     </script>
+
 <body>
     <form id="form1" runat="server">
 
