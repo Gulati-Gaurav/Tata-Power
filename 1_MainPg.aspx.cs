@@ -10,7 +10,7 @@ namespace WebApplication5
     public partial class MainPg : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        
+        {
 
         }
 
