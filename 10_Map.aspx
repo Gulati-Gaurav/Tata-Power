@@ -40,12 +40,18 @@
                 return '#' + Math.floor(Math.random() * 16777215).toString(16);
             }
 
-            for (var i = 0; i < locations.length - 1; i++) {
+            for (let i = 0; i < locations.length - 1; i++) {
                 var color = random_col();
                 L.polyline([locations[i], locations[i + 1]], { color: color }).addTo(map);
-                L.marker(locations[i]).addTo(map);
+            
+                if (i == 0)
+                    L.circleMarker(locations[i], { color: 'red' }).addTo(map).bindTooltip('Latitude: ' + locations[i][0] + '<br>Longitude: ' + locations[i][1]);
+                else
+                    L.marker(locations[i]).addTo(map).bindTooltip('Latitude: ' + locations[i][0] + '<br>Longitude: ' + locations[i][1]);
             }
-            L.marker(locations[locations.length - 1]).addTo(map);
+
+            const lastLocation = locations[locations.length - 1];
+            L.circleMarker(lastLocation, { color: 'red' }).addTo(map).bindTooltip('Latitude: ' + lastLocation[0] + '<br>Longitude: ' + lastLocation[1]);
         };
     </script>
 
